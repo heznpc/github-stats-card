@@ -16,18 +16,6 @@ One service replaces 5–6 scattered tools. Deploy once on Vercel, use everywher
 </p>
 
 <p>
-  <img src="https://profilekit.vercel.app/api/contributions?username=heznpc&color=58a6ff" alt="Contributions" />
-</p>
-
-<p>
-  <img src="https://profilekit.vercel.app/api/activity?username=heznpc" alt="Activity" />
-</p>
-
-<p>
-  <img src="https://profilekit.vercel.app/api/repos?username=heznpc&repo=ProfileKit" alt="Repo Card" />
-</p>
-
-<p>
   <img src="https://profilekit.vercel.app/api/leetcode?username=heznpc" alt="LeetCode" />
 </p>
 
@@ -49,9 +37,6 @@ One service replaces 5–6 scattered tools. Deploy once on Vercel, use everywher
 |----------|-------------|---------|
 | `/api/stats` | GitHub stats — commits, PRs, issues, stars, repos | `?username=heznpc` |
 | `/api/languages` | Top languages with percentage bars | `?username=heznpc` |
-| `/api/activity` | Recent activity timeline | `?username=heznpc` |
-| `/api/contributions` | Contribution graph with custom colors | `?username=heznpc&color=58a6ff` |
-| `/api/repos` | Repository card with stars, forks, language | `?username=heznpc&repo=ProfileKit` |
 | `/api/typing` | Typing animation | `?lines=Hello,World&color=58a6ff` |
 | `/api/quote` | Random or daily dev quotes | `?daily=true` |
 | `/api/social` | Social links card | `?github=heznpc&linkedin=heznpc` |
@@ -62,9 +47,6 @@ One service replaces 5–6 scattered tools. Deploy once on Vercel, use everywher
 ```markdown
 ![Stats](https://profilekit.vercel.app/api/stats?username=heznpc)
 ![Languages](https://profilekit.vercel.app/api/languages?username=heznpc)
-![Activity](https://profilekit.vercel.app/api/activity?username=heznpc)
-![Contributions](https://profilekit.vercel.app/api/contributions?username=heznpc)
-![Repo](https://profilekit.vercel.app/api/repos?username=heznpc&repo=ProfileKit)
 ![Typing](https://profilekit.vercel.app/api/typing?lines=Hello,World)
 ![Quote](https://profilekit.vercel.app/api/quote)
 ![Social](https://profilekit.vercel.app/api/social?github=heznpc&x=heznpc)
@@ -116,12 +98,6 @@ These work on all endpoints (where applicable):
 | `langs_count` | Number of languages (default: 6, max: 10) |
 | `hide` | Comma-separated language names to exclude |
 | `compact` | `true` for stacked bar layout |
-
-### /api/contributions
-| Param | Description |
-|-------|-------------|
-| `color` | Accent color for filled cells (any hex) |
-| `weeks` | Number of weeks to show (1–52, default: 52) |
 
 ### /api/typing
 | Param | Description |
