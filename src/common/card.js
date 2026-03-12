@@ -34,7 +34,7 @@ function renderCard({ width, height, title, colors, hideBorder, hideTitle, hideB
     .lang-name { font: 400 13px 'Segoe UI', Ubuntu, sans-serif; fill: ${colors.text}; }
     .lang-pct { font: 400 12px 'Segoe UI', Ubuntu, sans-serif; fill: ${colors.muted}; }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    .stagger { opacity: 0; animation: fadeIn 0.3s ease-in-out forwards; }
+    .stagger { animation: fadeIn 0.3s ease-in-out both; }
   </style>
   <rect x="0.5" y="0.5" width="${width - 1}" height="${height - 1}" rx="${rx}"
         fill="${colors.bg}" stroke="${colors.border}" stroke-opacity="${hideBorder ? 0 : 1}"/>
