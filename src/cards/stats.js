@@ -3,12 +3,12 @@ const { icons } = require("../common/icons");
 const { formatNumber, escapeHtml } = require("../common/utils");
 
 const statItems = [
-  { key: "commits", label: "Total Commits", icon: icons.commits, field: "totalCommits" },
-  { key: "prs", label: "Total PRs", icon: icons.prs, field: "totalPRs" },
-  { key: "issues", label: "Total Issues", icon: icons.issues, field: "totalIssues" },
-  { key: "stars", label: "Total Stars", icon: icons.stars, field: "totalStars" },
-  { key: "repos", label: "Total Repos", icon: icons.repos, field: "totalRepos" },
-  { key: "contributed", label: "Contributed To", icon: icons.contributed, field: "contributedTo" },
+  { key: "commits", label: "Total Commits", icon: icons.commits, field: "totalCommits", color: "#3fb950" },
+  { key: "prs", label: "Total PRs", icon: icons.prs, field: "totalPRs", color: "#a371f7" },
+  { key: "issues", label: "Total Issues", icon: icons.issues, field: "totalIssues", color: "#f0883e" },
+  { key: "stars", label: "Total Stars", icon: icons.stars, field: "totalStars", color: "#e3b341" },
+  { key: "repos", label: "Total Repos", icon: icons.repos, field: "totalRepos", color: "#56d4dd" },
+  { key: "contributed", label: "Contributed To", icon: icons.contributed, field: "contributedTo", color: "#f778ba" },
 ];
 
 function renderStatsCard(stats, { colors, hide = [], hideBorder, hideTitle, title }) {
@@ -24,12 +24,12 @@ function renderStatsCard(stats, { colors, hide = [], hideBorder, hideTitle, titl
       const value = formatNumber(stats[item.field]);
       const delay = i * 150;
       return `<g transform="translate(25, ${y})" class="stagger" style="animation-delay: ${delay}ms">
-      <circle cx="10" cy="8" r="12" fill="${colors.icon}" opacity="0.1"/>
-      <svg x="2" y="0" viewBox="0 0 16 16" width="16" height="16" fill="${colors.icon}">
+      <circle cx="10" cy="8" r="12" fill="${item.color}" opacity="0.1"/>
+      <svg x="2" y="0" viewBox="0 0 16 16" width="16" height="16" fill="${item.color}">
         ${item.icon}
       </svg>
       <text x="32" y="12.5" class="stat-label">${item.label}</text>
-      <text x="450" y="12.5" class="stat-value" text-anchor="end">${value}</text>
+      <text x="450" y="12.5" class="stat-value" text-anchor="end" fill="${item.color}">${value}</text>
     </g>`;
     })
     .join("\n  ");

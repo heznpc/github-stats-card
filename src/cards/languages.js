@@ -16,18 +16,6 @@ function renderDefault(languages, { colors, hideBorder, hideTitle, cardTitle }) 
   const barWidth = 185;
   const height = startY + languages.length * rowHeight + 15;
 
-  const gradients = languages
-    .map((lang, i) => {
-      const r = parseInt(lang.color.slice(1, 3), 16);
-      const g = parseInt(lang.color.slice(3, 5), 16);
-      const b = parseInt(lang.color.slice(5, 7), 16);
-      return `<linearGradient id="lang-${i}" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="${lang.color}"/>
-      <stop offset="100%" stop-color="rgba(${r},${g},${b},0.6)"/>
-    </linearGradient>`;
-    })
-    .join("\n    ");
-
   const rows = languages
     .map((lang, i) => {
       const y = startY + i * rowHeight;
@@ -36,14 +24,12 @@ function renderDefault(languages, { colors, hideBorder, hideTitle, cardTitle }) 
       return `<g transform="translate(25, ${y})" class="stagger" style="animation-delay: ${delay}ms">
       <circle cx="5" cy="7" r="5" fill="${lang.color}"/>
       <text x="18" y="11" class="lang-name">${escapeHtml(lang.name)}</text>
-      <rect x="220" y="1" width="${barWidth}" height="12" rx="6" fill="${colors.border}" opacity="0.5"/>
-      <rect x="220" y="1" width="${fillWidth}" height="12" rx="6" fill="url(#lang-${i})"/>
+      <rect x="220" y="1" width="${barWidth}" height="12" rx="6" fill="${colors.border}" opacity="0.4"/>
+      <rect x="220" y="1" width="${fillWidth}" height="12" rx="6" fill="${lang.color}"/>
       <text x="420" y="11" class="lang-pct">${lang.percentage}%</text>
     </g>`;
     })
     .join("\n  ");
-
-  const body = `${rows}`;
 
   return renderCard({
     width: 495,
@@ -52,7 +38,7 @@ function renderDefault(languages, { colors, hideBorder, hideTitle, cardTitle }) 
     colors,
     hideBorder,
     hideTitle,
-    body: `<defs>${gradients}</defs>\n  ${body}`,
+    body: rows,
   });
 }
 
@@ -60,22 +46,25 @@ function renderCompact(languages, { colors, hideBorder, hideTitle, cardTitle }) 
   const barWidth = 445;
   const startY = hideTitle ? 25 : 55;
 
-  // Stacked bar
+  // Stacked bar with clip path for proper rounding
+  const totalPct = languages.reduce((sum, l) => sum + l.percentage, 0);
   let barX = 25;
   const barSegments = languages
-    .map((lang, i) => {
-      const w = Math.max((barWidth * lang.percentage) / 100, 1);
-      const isFirst = i === 0;
-      const isLast = i === languages.length - 1;
-      const rx = isFirst || isLast ? 5 : 0;
-      const segment = `<rect x="${barX}" y="${startY}" width="${w}" height="10" fill="${lang.color}"${isFirst ? ` rx="${rx}"` : ""}/>`;
+    .map((lang) => {
+      const w = (barWidth * lang.percentage) / totalPct;
+      const segment = `<rect x="${barX}" y="${startY}" width="${w}" height="10" fill="${lang.color}"/>`;
       barX += w;
       return segment;
     })
     .join("\n    ");
 
-  const barGroup = `<g>
-    <rect x="25" y="${startY}" width="${barWidth}" height="10" rx="5" fill="${colors.border}" opacity="0.5"/>
+  const barGroup = `<defs>
+    <clipPath id="bar-clip">
+      <rect x="25" y="${startY}" width="${barWidth}" height="10" rx="5"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#bar-clip)">
+    <rect x="25" y="${startY}" width="${barWidth}" height="10" fill="${colors.border}" opacity="0.4"/>
     ${barSegments}
   </g>`;
 

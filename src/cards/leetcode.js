@@ -2,9 +2,9 @@ const { renderCard } = require("../common/card");
 const { escapeHtml } = require("../common/utils");
 
 const difficultyColors = {
-  easy: "#00b8a3",
-  medium: "#ffc01e",
-  hard: "#ff375f",
+  easy: "#3fb950",
+  medium: "#d29922",
+  hard: "#f85149",
 };
 
 function renderLeetcodeCard(stats, { colors, hideBorder, hideTitle, title }) {
@@ -21,8 +21,8 @@ function renderLeetcodeCard(stats, { colors, hideBorder, hideTitle, title }) {
   const dashOffset = circumference * (1 - solvedPct);
 
   const circleMarkup = `
-    <circle cx="${circleX}" cy="${circleY}" r="${circleR}" fill="none" stroke="${colors.border}" stroke-width="6" opacity="0.5"/>
-    <circle cx="${circleX}" cy="${circleY}" r="${circleR}" fill="none" stroke="${colors.icon}" stroke-width="6"
+    <circle cx="${circleX}" cy="${circleY}" r="${circleR}" fill="none" stroke="${colors.border}" stroke-width="6"/>
+    <circle cx="${circleX}" cy="${circleY}" r="${circleR}" fill="none" stroke="#a371f7" stroke-width="6"
       stroke-dasharray="${circumference}" stroke-dashoffset="${dashOffset}"
       stroke-linecap="round" transform="rotate(-90 ${circleX} ${circleY})"/>
     <text x="${circleX}" y="${circleY - 8}" text-anchor="middle" class="stat-value" font-size="20">${stats.totalSolved}</text>
@@ -47,8 +47,8 @@ function renderLeetcodeCard(stats, { colors, hideBorder, hideTitle, title }) {
 
       return `<g transform="translate(${barStartX}, ${y})">
       <text x="0" y="10" class="lang-name" fill="${color}" font-weight="600">${diff.label}</text>
-      <text x="${barWidth}" y="10" text-anchor="end" class="stat-value" font-size="12">${diff.data.solved}<tspan class="lang-pct"> / ${diff.data.total}</tspan></text>
-      <rect x="0" y="16" width="${barWidth}" height="7" rx="3.5" fill="${colors.border}" opacity="0.5"/>
+      <text x="${barWidth}" y="10" text-anchor="end" class="stat-value" font-size="12" fill="${color}">${diff.data.solved}<tspan class="lang-pct"> / ${diff.data.total}</tspan></text>
+      <rect x="0" y="16" width="${barWidth}" height="7" rx="3.5" fill="${colors.border}" opacity="0.4"/>
       <rect x="0" y="16" width="${fillWidth}" height="7" rx="3.5" fill="${color}"/>
     </g>`;
     })

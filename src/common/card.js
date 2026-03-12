@@ -8,9 +8,9 @@ function renderCard({ width, height, title, colors, hideBorder, hideTitle, body 
   return `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="accent-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="${colors.icon}"/>
-      <stop offset="50%" stop-color="${colors.title}"/>
-      <stop offset="100%" stop-color="${colors.icon}" stop-opacity="0.6"/>
+      <stop offset="0%" stop-color="#3fb950"/>
+      <stop offset="40%" stop-color="#a371f7"/>
+      <stop offset="100%" stop-color="#f778ba"/>
     </linearGradient>
     <clipPath id="card-clip">
       <rect x="0.5" y="0.5" width="${width - 1}" height="${height - 1}" rx="6"/>
@@ -19,10 +19,10 @@ function renderCard({ width, height, title, colors, hideBorder, hideTitle, body 
   <style>
     .header { font: 600 18px 'Segoe UI', Ubuntu, sans-serif; fill: ${colors.title}; }
     .stat-label { font: 400 14px 'Segoe UI', Ubuntu, sans-serif; fill: ${colors.text}; }
-    .stat-value { font: 700 14px 'Segoe UI', Ubuntu, sans-serif; fill: ${colors.icon}; }
+    .stat-value { font: 700 14px 'Segoe UI', Ubuntu, sans-serif; fill: ${colors.title}; }
     .lang-name { font: 400 13px 'Segoe UI', Ubuntu, sans-serif; fill: ${colors.text}; }
     .lang-pct { font: 400 12px 'Segoe UI', Ubuntu, sans-serif; fill: ${colors.muted}; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateX(-5px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     .stagger { opacity: 0; animation: fadeIn 0.3s ease-in-out forwards; }
   </style>
   <rect x="0.5" y="0.5" width="${width - 1}" height="${height - 1}" rx="6"

@@ -27,7 +27,7 @@ function renderQuoteCard(quote, { colors, hideBorder, width }) {
   const height = startY + textHeight + 45;
 
   // Decorative large quote mark
-  const decorQuote = `<text x="20" y="55" font-family="Georgia, serif" font-size="60" fill="${colors.icon}" opacity="0.15">\u201C</text>`;
+  const decorQuote = `<text x="20" y="55" font-family="Georgia, serif" font-size="60" fill="${colors.muted}" opacity="0.25">\u201C</text>`;
 
   const quoteMarkup = lines
     .map((line, i) => {
@@ -40,7 +40,7 @@ function renderQuoteCard(quote, { colors, hideBorder, width }) {
     .join("\n    ");
 
   const authorY = startY + textHeight + 20;
-  const authorMarkup = `<text x="${cardWidth - 25}" y="${authorY}" text-anchor="end" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13" font-weight="600" fill="${colors.icon}">\u2014 ${escapeHtml(quote.author)}</text>`;
+  const authorMarkup = `<text x="${cardWidth - 25}" y="${authorY}" text-anchor="end" font-family="'Segoe UI', Ubuntu, sans-serif" font-size="13" font-weight="600" fill="${colors.title}">\u2014 ${escapeHtml(quote.author)}</text>`;
 
   const body = `${decorQuote}\n    ${quoteMarkup}\n    ${authorMarkup}`;
 

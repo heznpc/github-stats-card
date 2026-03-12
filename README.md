@@ -59,11 +59,11 @@ One service replaces 5–6 scattered tools. Deploy once on Vercel, use everywher
 
 Three built-in themes. Pass `?theme=` to any endpoint.
 
-| Theme | Background | Accent |
-|-------|-----------|--------|
-| `dark` (default) | `#0d1117` | `#58a6ff` |
-| `dark_dimmed` | `#22272e` | `#539bf5` |
-| `light` | `#ffffff` | `#0969da` |
+| Theme | Background | Text |
+|-------|-----------|------|
+| `dark` (default) | `#0d1117` | `#e6edf3` |
+| `dark_dimmed` | `#22272e` | `#adbac7` |
+| `light` | `#ffffff` | `#1f2328` |
 
 Override individual colors with query params:
 
