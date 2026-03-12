@@ -1,7 +1,7 @@
 const QUERY = `
 query userLanguages($login: String!) {
   user(login: $login) {
-    repositories(ownerAffiliations: OWNER, isFork: false, first: 100, orderBy: {direction: DESC, field: SIZE}) {
+    repositories(ownerAffiliations: OWNER, isFork: false, first: 100, orderBy: {direction: DESC, field: STARGAZERS}) {
       nodes {
         name
         languages(first: 10, orderBy: {field: SIZE, direction: DESC}) {
