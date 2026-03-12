@@ -16,10 +16,6 @@ One service replaces 5–6 scattered tools. Deploy once on Vercel, use everywher
 </p>
 
 <p>
-  <img src="https://profilekit.vercel.app/api/leetcode?username=heznpc" alt="LeetCode" />
-</p>
-
-<p>
   <img src="https://profilekit.vercel.app/api/typing?lines=ProfileKit,All-in-one+GitHub+profile+cards&color=58a6ff&align=center&width=500&height=40" alt="Typing" />
 </p>
 
