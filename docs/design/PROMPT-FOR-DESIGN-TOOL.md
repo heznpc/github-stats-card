@@ -228,7 +228,7 @@ const ALL_FONTS  = ["", "inter", "space-grotesk", "jetbrains-mono", "ibm-plex-sa
 const SLOT_DECLS = {
   hero: {
     bg:       { type: "enum",   options: ["gradient", "wave", "grid", "particles"], default: "wave" },
-    name:     { type: "text",   default: "Hi, I'm Ren" },
+    name:     { type: "text",   default: "Hi, I'm Heznpc" },
     subtitle: { type: "text",   default: "I build small sharp tools" },
     theme:    { type: "enum",   options: ALL_THEMES, default: null },
     font:     { type: "enum",   options: ALL_FONTS,  default: null },
@@ -385,15 +385,15 @@ window.PK = {
 
 ## 8. Output format example
 
-For a composition `[hero(name=Ren, bg=wave) → markdown("## Foundation") → pin(repo=ProfileKit)]`
+For a composition `[hero(name=Heznpc, bg=wave) → markdown("## Foundation") → pin(repo=ProfileKit)]`
 with composition defaults `{ theme: "tokyo_night", font: "space-grotesk" }`,
 the Copy markdown button must produce exactly this:
 
 ```html
 <picture>
-  <source media="(prefers-color-scheme: dark)"  srcset="https://profilekit.vercel.app/api/hero?bg=wave&name=Ren&width=1200&height=280&theme=tokyo_night&font=space-grotesk">
-  <source media="(prefers-color-scheme: light)" srcset="https://profilekit.vercel.app/api/hero?bg=wave&name=Ren&width=1200&height=280&theme=rose_pine_dawn&font=space-grotesk">
-  <img alt="hero card" src="https://profilekit.vercel.app/api/hero?bg=wave&name=Ren&width=1200&height=280&theme=tokyo_night&font=space-grotesk">
+  <source media="(prefers-color-scheme: dark)"  srcset="https://profilekit.vercel.app/api/hero?bg=wave&name=Heznpc&width=1200&height=280&theme=tokyo_night&font=space-grotesk">
+  <source media="(prefers-color-scheme: light)" srcset="https://profilekit.vercel.app/api/hero?bg=wave&name=Heznpc&width=1200&height=280&theme=rose_pine_dawn&font=space-grotesk">
+  <img alt="hero card" src="https://profilekit.vercel.app/api/hero?bg=wave&name=Heznpc&width=1200&height=280&theme=tokyo_night&font=space-grotesk">
 </picture>
 
 ## Foundation

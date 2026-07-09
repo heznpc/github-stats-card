@@ -36,7 +36,7 @@ A community gallery for sharing single-card presets and adopting others' designs
 
 ## About this project
 
-**Currently implemented.** 28 SVG card endpoints (`/api/*`), 17 built-in themes plus gist-hosted custom palettes via `theme_url=`, five bundled variable fonts, `/api/stack` composition with namespaced child IDs, a live playground at [profilekit.vercel.app](https://profilekit.vercel.app), and an MCP wrapper at [`profilekit-mcp`](https://www.npmjs.com/package/profilekit-mcp). Two deployment paths: **Vercel functions** (primary, `api/[endpoint].js`) and an **optional self-hosted Docker** image (`Dockerfile` + `server.js`) running the same handlers. Zero runtime dependencies, 30-minute CDN cache on the hosted instance.
+**Currently implemented.** 28 SVG card endpoints (`/api/*`), 17 built-in themes plus gist-hosted custom palettes via `theme_url=`, five bundled variable fonts, `/api/stack` composition with namespaced child IDs, a live playground at [profilekit.vercel.app](https://profilekit.vercel.app), and an MCP wrapper at [`@heznpc/profilekit-mcp`](https://www.npmjs.com/package/@heznpc/profilekit-mcp). Two deployment paths: **Vercel functions** (primary, `api/[endpoint].js`) and an **optional self-hosted Docker** image (`Dockerfile` + `server.js`) running the same handlers. Zero runtime dependencies, 30-minute CDN cache on the hosted instance.
 
 **Planned.** A single-card preset gallery at `/gallery` — adopt someone else's design URL as a starting point, then tweak parameters in the editor. Cross-agent preset compile (one preset → Claude Code, Cursor, Codex CLI configs).
 
@@ -182,7 +182,7 @@ The GitHub-profile-card space has two long-running projects ProfileKit is most o
 | Configuration | Query string + optional `theme_url=` gist for palettes | Query string + per-theme presets | YAML in `.github/workflows/` |
 | Runtime deps | Zero (Node 22 `node:test`, `node:fetch`) | Several | Action toolchain + Docker image |
 | Cards beyond GitHub stats | Hero / section / divider / now / timeline / tags / toc / typing / wave / terminal / neon / glitch / matrix / snake / equalizer / heartbeat / constellation / radar / quote / posts (devto, medium, rss) | GitHub stats, languages, pin, gists | Mostly GitHub stats; plugin set is the largest of the three |
-| MCP integration | First-class — [`profilekit-mcp`](https://www.npmjs.com/package/profilekit-mcp) lets Claude / Cursor / Codex CLI build cards as a tool call | None | None |
+| MCP integration | First-class — [`@heznpc/profilekit-mcp`](https://www.npmjs.com/package/@heznpc/profilekit-mcp) lets Claude / Cursor / Codex CLI build cards as a tool call | None | None |
 | Composition into one image | `/api/stack?cards=hero,section,now,…` | Not native | The whole point of metrics is a single composed image |
 
 **When ProfileKit fits well**: you want the same card definition usable in a GitHub README *and* a dev.to bio *and* an MCP tool call, you don't want a GitHub Action committing to your repo, and "no ranking, composable presentation" sounds right for your profile.
@@ -302,7 +302,7 @@ The JSON shape mirrors the entries in `src/common/themes.js`:
 
 **Rules**:
 
-- `https://gist.githubusercontent.com` is currently the only allowlisted host. Other hosts → 400 (header `X-Theme-Error`).
+- `https://gist.githubusercontent.com` is currently the only allowlisted host. Other hosts are rejected by the theme loader; the card falls back to the default `dark` palette and carries an `X-Theme-Error` header.
 - All seven keys are required. Extras are silently ignored so you can keep comments / metadata in the gist.
 - `accentStops` must be an array of two or more `#hex` strings.
 - Per-param overrides (`?bg_color=`, `?accent_color=`, …) still win on top of the external palette.
@@ -696,7 +696,7 @@ docker build -t profilekit:local .
 
 # Run a single replica
 docker run --rm -p 3000:3000 \
-  -e GITHUB_TOKEN=ghp_... \
+  -e GITHUB_TOKEN=REPLACE_WITH_GITHUB_TOKEN \
   profilekit:local
 # → http://localhost:3000/api/divider?style=wave
 ```
@@ -709,7 +709,7 @@ The Docker path is purely additive — the Vercel path keeps working unchanged.
 
 ## Roadmap
 
-- **Now** — 28 card endpoints, 17 themes, playground at [profilekit.vercel.app](https://profilekit.vercel.app), MCP server at [`profilekit-mcp`](https://www.npmjs.com/package/profilekit-mcp), curated picks in the Templates tab.
+- **Now** — 28 card endpoints, 17 themes, playground at [profilekit.vercel.app](https://profilekit.vercel.app), MCP server at [`@heznpc/profilekit-mcp`](https://www.npmjs.com/package/@heznpc/profilekit-mcp), curated picks in the Templates tab.
 - **Next — Gallery.** Single-card presets shareable by URL or registered in a browseable index at `profilekit.vercel.app/gallery`. Adopting a preset opens it in the editor with the original params pre-filled so you tweak from a starting point instead of a blank canvas. Editing UX targets a Sims 3 Create-A-Style / Naver-blog-editor feel — direct manipulation on the preview, not just a form. **Explicit non-goals**: no ratings, no rankings, no remix lineage, no leaderboards.
 - **Parallel** — Cross-agent compile (one preset definition → Claude Code, Cursor, Codex CLI configs). Lives as a feature, not a roadmap tier.
 
