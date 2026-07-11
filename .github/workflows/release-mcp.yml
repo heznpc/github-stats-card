@@ -1,0 +1,50 @@
+name: Release profilekit-mcp
+
+on:
+  push:
+    tags: ['profilekit-mcp-v*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+  attestations: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: npm-publish
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+          cache: npm
+
+      - name: Install monorepo dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Verify release tag matches package version
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          set -euo pipefail
+          version=$(node -p "require('./packages/mcp/package.json').version")
+          expected="profilekit-mcp-v${version}"
+          actual="${GITHUB_REF_NAME}"
+          if [ "$actual" != "$expected" ]; then
+            echo "::error::Expected tag $expected for package version $version, got $actual"
+            exit 1
+          fi
+
+      - name: Audit
+        run: npm audit --audit-level=high
+
+      - name: Verify MCP package
+        run: npm run verify:mcp
+
+      # Configure npm trusted publishing for starter-series/ProfileKit and
+      # .github/workflows/release-mcp.yml before the first monorepo release.
+      - name: Publish
+        run: npm publish --workspace profilekit-mcp

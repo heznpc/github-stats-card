@@ -50,6 +50,9 @@ jobs:
       - name: Syntax check
         run: npm run check
 
+      - name: Verify MCP fallback catalog
+        run: npm run check:catalog
+
   test:
     runs-on: ubuntu-latest
     strategy:
@@ -66,15 +69,53 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      # tests/ uses the node:test runner with zero deps — no install needed.
+      # Core tests use the node:test runner with zero deps — no install needed.
       - name: Syntax check
         run: npm run check
 
-      - name: Run tests
-        run: npm test
+      - name: Run core tests
+        run: npm run test:core
 
       - name: Audit npm package metadata
         run: npm audit --audit-level=high
+
+  mcp:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: ['20', '22']
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      - name: Install monorepo dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Verify generated catalog contract
+        run: npm run check:catalog
+
+      - name: Run MCP tests
+        run: npm run test:mcp
+
+      - name: Build MCP package
+        run: npm run build:mcp
+
+      - name: Smoke MCP server
+        run: npm run smoke:mcp
+
+      - name: Check CLI help
+        if: matrix.node-version == 22
+        run: node packages/mcp/dist/bin.js help
+
+      - name: Verify MCP package contents
+        if: matrix.node-version == 22
+        run: npm run pack:check:mcp
 
   # Validates the optional self-host path: image builds, container starts,
   # HEALTHCHECK passes, /api/health responds, /api/divider returns SVG.
@@ -130,7 +171,7 @@ jobs:
           docker rm -f pkit
 
   ci:
-    needs: [static-checks, test, docker]
+    needs: [static-checks, test, mcp, docker]
     if: always()
     runs-on: ubuntu-latest
     steps:
@@ -138,8 +179,9 @@ jobs:
         run: |
           if [ "${{ needs.static-checks.result }}" != "success" ] || \
              [ "${{ needs.test.result }}" != "success" ] || \
+             [ "${{ needs.mcp.result }}" != "success" ] || \
              [ "${{ needs.docker.result }}" != "success" ]; then
-            echo "::error::CI failed (static-checks=${{ needs.static-checks.result }}, test=${{ needs.test.result }}, docker=${{ needs.docker.result }})"
+            echo "::error::CI failed (static-checks=${{ needs.static-checks.result }}, test=${{ needs.test.result }}, mcp=${{ needs.mcp.result }}, docker=${{ needs.docker.result }})"
             exit 1
           fi
           echo "All checks passed."

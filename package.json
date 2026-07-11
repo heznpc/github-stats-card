@@ -2,16 +2,28 @@
   "name": "profilekit",
   "version": "1.0.0",
   "private": true,
+  "workspaces": [
+    "packages/mcp"
+  ],
   "description": "Cards for your GitHub README. 28 composable SVG card endpoints, every visual property exposed as a query parameter. No ratings, no rankings.",
   "engines": {
     "node": ">=22 <25"
   },
   "scripts": {
-    "test": "node --test tests/*.test.js",
+    "test": "npm run test:core && npm run test:mcp",
+    "test:core": "node --test tests/*.test.js",
+    "test:mcp": "npm test --workspace profilekit-mcp",
     "build": "npm run check",
+    "build:mcp": "npm run build --workspace profilekit-mcp",
+    "build:all": "npm run build && npm run build:mcp",
     "smoke:server": "node scripts/server-smoke.js",
+    "smoke:mcp": "npm run smoke:mcp --workspace profilekit-mcp",
     "pack:check": "node scripts/pack-check.js",
-    "check": "node --check server.js && find api src scripts -name '*.js' -exec node --check {} +"
+    "pack:check:mcp": "npm run pack:check --workspace profilekit-mcp",
+    "check:catalog": "npm run check:catalog --workspace profilekit-mcp",
+    "check": "node --check server.js && find api src scripts public -name '*.js' -exec node --check {} +",
+    "verify:mcp": "npm run check:catalog && npm run test:mcp && npm run smoke:mcp && npm run pack:check:mcp",
+    "verify": "npm run check && npm run test:core && npm run verify:mcp && npm run pack:check && npm run smoke:server"
   },
   "files": [
     "api/",

@@ -1,8 +1,7 @@
 # Dependabot v2 — GitHub Actions plus the small npm dev-tool surface.
 #
-# ProfileKit has zero runtime dependencies, but CI uses npm dev tooling
-# from package-lock.json. Track that dev surface so audit/license gates are
-# kept current instead of only discovering stale tools after install.
+# The renderer has zero runtime dependencies. The root lock also covers the
+# packages/mcp workspace and its MCP SDK/runtime toolchain.
 version: 2
 updates:
   - package-ecosystem: "npm"

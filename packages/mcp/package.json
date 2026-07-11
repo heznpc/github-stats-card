@@ -1,0 +1,66 @@
+{
+  "name": "profilekit-mcp",
+  "version": "0.2.2",
+  "description": "MCP server for ProfileKit. Render composable GitHub profile SVG cards from Claude Code, Codex CLI, or any MCP-capable agent.",
+  "type": "module",
+  "types": "dist/server.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/server.d.ts",
+      "import": "./dist/server.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "profilekit-mcp": "dist/bin.js"
+  },
+  "files": [
+    "dist/",
+    "examples/",
+    "README.md",
+    "SECURITY.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "sync:catalog": "node scripts/sync-catalog.mjs",
+    "check:catalog": "node scripts/sync-catalog.mjs --check",
+    "build": "npm run check:catalog && tsc",
+    "dev": "tsx src/bin.ts",
+    "test": "node --import tsx --test src/url.test.ts src/fetch-catalog.test.ts",
+    "smoke:mcp": "npm run build && node scripts/mcp-smoke.mjs",
+    "pack:check": "npm run build && node scripts/verify-pack.mjs",
+    "prepublishOnly": "npm test && npm run smoke:mcp && npm run pack:check"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.4",
+    "license-checker-evergreen": "^6.3.1",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "mcp",
+    "profilekit",
+    "github-profile",
+    "svg",
+    "claude-code",
+    "codex",
+    "chatgpt-apps"
+  ],
+  "author": "heznpc",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/starter-series/ProfileKit.git",
+    "directory": "packages/mcp"
+  },
+  "bugs": {
+    "url": "https://github.com/starter-series/ProfileKit/issues"
+  },
+  "homepage": "https://github.com/starter-series/ProfileKit/tree/main/packages/mcp#readme"
+}
